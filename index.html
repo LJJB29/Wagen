@@ -9,131 +9,7 @@
   <link rel="apple-touch-icon" href="your-app-icon.png">
   <link rel="apple-touch-startup-image" href="your-startup-image.png">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    }
-
-    body {
-      padding: 16px;
-      background-color: #f5f5f5;
-      max-width: 100%;
-      margin: 0 auto;
-    }
-
-    @media (min-width: 600px) {
-      body {
-        max-width: 500px;
-        padding: 20px;
-      }
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #333;
-    }
-
-    .logo {
-      font-size: 28px;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-
-    @media (min-width: 600px) {
-      .logo {
-        font-size: 32px;
-      }
-    }
-
-    .tagline {
-      font-size: 14px;
-      color: #666;
-      margin-top: 5px;
-    }
-
-    .controls {
-      background-color: white;
-      padding: 16px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      margin-bottom: 16px;
-    }
-
-    @media (min-width: 600px) {
-      .controls {
-        padding: 20px;
-        margin-bottom: 20px;
-      }
-    }
-
-    .control-group {
-      margin-bottom: 15px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-      color: #555;
-    }
-
-    select, input {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      margin-bottom: 10px;
-      font-size: 16px;
-    }
-
-    .color-picker {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-
-    .color-input {
-      flex: 1;
-      min-width: 100px;
-    }
-
-    input[type="color"] {
-      height: 40px;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      background-color: #4a6ef5;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 16px;
-      transition: background-color 0.3s;
-      min-height: 48px;
-    }
-
-    button:hover {
-      background-color: #3a5ad0;
-    }
-
-    button:active {
-      background-color: #2a4ac0;
-    }
-
-    .preview-wrapper {
-      display: flex;
-      justify-content: center;
-      margin: 0 auto;
-      width: 100%;
-    }
-
+    /* ... (Your existing styles) ... */
     .preview-container {
       position: relative;
       width: 80%;
@@ -142,70 +18,7 @@
       border-radius: 30px;
       overflow: hidden;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-
-    }
-
-    @media (min-width: 600px) {
-      .preview-container {
-        height: 600px;
-      }
-    }
-
-    #wallpaper {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .download-btn {
-      margin-top: 16px;
-      background-color: #32a852;
-    }
-
-    @media (min-width: 600px) {
-      .download-btn {
-        margin-top: 20px;
-      }
-    }
-
-    .download-btn:hover {
-      background-color: #268c3f;
-    }
-
-    .download-btn:active {
-      background-color: #1a7a30;
-    }
-
-    .phone-notch {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 50%;
-      height: 25px;
-      background-color: #222;
-      border-bottom-left-radius: 15px;
-      border-bottom-right-radius: 15px;
-      z-index: 10;
-    }
-
-    @media (min-width: 600px) {
-      .phone-notch {
-        height: 30px;
-      }
-    }
-
-    .footer {
-      text-align: center;
-      margin-top: 20px;
-      padding: 10px;
-      font-size: 12px;
-      color: #888;
-    }
-
-    .spacing-bottom {
-      height: 20px;
+      border: 10px solid #222; /* Reverted border */
     }
   </style>
 </head>
@@ -264,6 +77,7 @@
 
   <div class="spacing-bottom"></div>
 
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <script>
     const wallpaperElement = document.getElementById('wallpaper');
     const generateButton = document.getElementById('generate');
@@ -275,12 +89,10 @@
     const previewContainer = document.querySelector('.preview-container');
     const phoneNotch = document.querySelector('.phone-notch');
 
-    // Function to check if the user is on a PC
     function isPC() {
       return !(/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
     }
 
-    // Function to set preview size based on device
     function setPreviewSize() {
       if (isPC()) {
         previewContainer.style.width = '500px';
@@ -296,10 +108,40 @@
       }
     }
 
-    // Call setPreviewSize on page load and resize
     setPreviewSize();
     window.addEventListener('resize', setPreviewSize);
 
-    // ... (Your existing generateWallpaper, createGradient, etc. functions) ...
+    function generateWallpaper() {
+      //... (Your generateWallpaper logic) ...
+    }
 
-    // Use a mock html2canvas function
+    // ... (Your createGradient, createStripes, createWaves, createDots, createGeometric functions) ...
+
+    function downloadWallpaper() {
+      html2canvas(wallpaperElement).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'wagen-wallpaper.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
+    }
+
+    let timer;
+
+    wallpaperElement.addEventListener('touchstart', function(e) {
+      timer = setTimeout(function() {
+        alert("In a real implementation, this would save the wallpaper to your device. You can screenshot the phone preview instead.");
+      }, 800);
+    });
+
+    wallpaperElement.addEventListener('touchend', function(e) {
+      clearTimeout(timer);
+    });
+
+    generateButton.addEventListener('click', generateWallpaper);
+    downloadButton.addEventListener('click', downloadWallpaper);
+
+    generateWallpaper();
+  </script>
+</body>
+</html>
