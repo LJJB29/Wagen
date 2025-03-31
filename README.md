@@ -1,5 +1,7 @@
 # Wagen - Wallpaper Generation
 A wallpaper Generation app made entirely out of HTML Code.
+
+try it out at https://ljjb29.github.io/Wagen/ (Custom Domain soon!)
 > [!IMPORTANT]
 > This is an early release, it may not function as intended.
 
