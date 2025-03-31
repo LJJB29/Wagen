@@ -264,9 +264,178 @@
 
   <div class="spacing-bottom"></div>
 
-  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <script>
-    // ... (Your JavaScript code) ...
+    const wallpaperElement = document.getElementById('wallpaper');
+    const generateButton = document.getElementById('generate');
+    const downloadButton = document.getElementById('download');
+    const patternSelect = document.getElementById('pattern');
+    const color1Input = document.getElementById('color1');
+    const color2Input = document.getElementById('color2');
+    const complexityInput = document.getElementById('complexity');
+
+    function generateWallpaper() {
+      const pattern = patternSelect.value;
+      const color1 = color1Input.value;
+      const color2 = color2Input.value;
+      const complexity = complexityInput.value;
+
+      wallpaperElement.innerHTML = '';
+
+      switch (pattern) {
+        case 'gradient':
+          createGradient(color1, color2);
+          break;
+        case 'stripes':
+          createStripes(color1, color2, complexity);
+          break;
+        case 'waves':
+          createWaves(color1, color2, complexity);
+          break;
+        case 'dots':
+          createDots(color1, color2, complexity);
+          break;
+        case 'geometric':
+          createGeometric(color1, color2, complexity);
+          break;
+      }
+    }
+
+    function createGradient(color1, color2) {
+      const angle = Math.floor(Math.random() * 360);
+      wallpaperElement.style.background = `linear-gradient(${angle}deg, ${color1}, ${color2})`;
+    }
+
+    function createStripes(color1, color2, complexity) {
+      const stripeWidth = 20 - complexity;
+      wallpaperElement.style.cssText = `
+        background: repeating-linear-gradient(
+          45deg,
+          ${color1},
+          ${color1} ${stripeWidth}px,
+          ${color2} ${stripeWidth}px,
+          ${color2} ${stripeWidth * 2}px
+        )
+      `;
+    }
+
+    function createWaves(color1, color2, complexity) {
+      // ... (Your createWaves logic) ...
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("width", "100%");
+      svg.setAttribute("height", "100%");
+      const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+      const gradient = document.createElementNS("http://www.w3.org/2000/svg", "linearGradient");
+      gradient.setAttribute("id", "wave-gradient");
+      gradient.setAttribute("x1", "0%");
+      gradient.setAttribute("y1", "0%");
+      gradient.setAttribute("x2", "100%");
+      gradient.setAttribute("y2", "100%");
+      const stop1 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
+      stop1.setAttribute("offset", "0%");
+      stop1.setAttribute("stop-color", color1);
+      const stop2 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
+      stop2.setAttribute("offset", "100%");
+      stop2.setAttribute("stop-color", color2);
+      gradient.appendChild(stop1);
+      gradient.appendChild(stop2);
+      defs.appendChild(gradient);
+      svg.appendChild(defs);
+      const waveCount = parseInt(complexity);
+      const waveHeight = 400 / waveCount;
+      for (let i = 0; i < waveCount; i++) {
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        const startY = i * waveHeight;
+        const amplitude = 20 + (i * 5);
+        const frequency = 0.01 + (i * 0.005);
+        let d = `M 0 ${startY}`;
+        for (let x = 0; x <= 500; x += 10) {
+          const y = startY + amplitude * Math.sin(x * frequency);
+          d += ` L ${x} ${y}`;
+        }
+        d += ` L 500 1000 L 0 1000 Z`;
+        path.setAttribute("d", d);
+        path.setAttribute("fill", `url(#wave-gradient)`);
+        path.setAttribute("opacity", 0.8 - (i * 0.1));
+        svg.appendChild(path);
+      }
+      wallpaperElement.innerHTML = '';
+      wallpaperElement.appendChild(svg);
+    }
+
+    function createDots(color1, color2, complexity) {
+      // ... (Your createDots logic) ...
+      wallpaperElement.style.background = color1;
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("width", "100%");
+      svg.setAttribute("height", "100%");
+      const dotSize = 12 - complexity * 0.8;
+      const spacing = dotSize * 2;
+      const rows = Math.ceil(600 / spacing);
+      const cols = Math.ceil(300 / spacing);
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+          const xOffset = (r % 2) * spacing / 2;
+          circle.setAttribute("cx", c * spacing + xOffset);
+          circle.setAttribute("cy", r * spacing);
+          circle.setAttribute("r", dotSize / 2);
+          circle.setAttribute("fill", color2);
+          svg.appendChild(circle);
+        }
+      }
+      wallpaperElement.innerHTML = '';
+      wallpaperElement.appendChild(svg);
+      wallpaperElement.style.background = color1;
+    }
+
+    function createGeometric(color1, color2, complexity) {
+      // ... (Your createGeometric logic) ...
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("width", "100%");
+      svg.setAttribute("height", "100%");
+      const size = 100 - complexity * 8;
+      const rows = Math.ceil(600 / size) + 1;
+      const cols = Math.ceil(300 / size) + 1;
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+          const x = c * size;
+          const y = r * size;
+          if ((r + c) % 2 === 0) {
+            polygon.setAttribute("points", `${x},${y} ${x + size},${y} ${x + size / 2},${y + size}`);
+            polygon.setAttribute("fill", color1);
+          } else {
+            polygon.setAttribute("points", `${x},${y} ${x + size},${y} ${x + size / 2},${y - size}`);
+            polygon.setAttribute("fill", color2);
+          }
+          svg.appendChild(polygon);
+        }
+      }
+      wallpaperElement.innerHTML = '';
+      wallpaperElement.appendChild(svg);
+    }
+
+    function downloadWallpaper() {
+      //mock implementation
+      alert("In a real implementation, this would download your wallpaper as an image. The HTML2Canvas library would be needed for actual download functionality.");
+    }
+
+    let timer;
+
+    wallpaperElement.addEventListener('touchstart', function(e) {
+      timer = setTimeout(function() {
+        alert("In a real implementation, this would save the wallpaper to your device. You can screenshot the phone preview instead.");
+      }, 800);
+    });
+
+    wallpaperElement.addEventListener('touchend', function(e) {
+      clearTimeout(timer);
+    });
+
+    generateButton.addEventListener('click', generateWallpaper);
+    downloadButton.addEventListener('click', downloadWallpaper);
+
+    generateWallpaper();
   </script>
 </body>
 </html>
